@@ -7,10 +7,8 @@ export const ADD_DIRECTOR = gql`
     $age: Int!
   ) {
     addDirector(
-      director: {
-        name: $name
-        age: $age
-      }
+      name: $name
+      age: $age
     ) {
       status
       message
@@ -26,10 +24,8 @@ export const UPDATE_DIRECTOR = gql`
   ) {
     updateDirector(
       directorId: $id
-      director: {
-        name: $name
-        age: $age
-      }
+      name: $name
+      age: $age
     ) {
       status
       message

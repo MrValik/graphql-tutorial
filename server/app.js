@@ -16,16 +16,13 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 
-// schema
-const schema = require('./graphql/schema')
+// graphql
+const schema = require('./graphql')
 
-// root
-const root = require('./graphql/root')
 
 // connect graphql
 app.use('/graphql', graphqlHTTP({
   schema,
-  rootValue: root,
   graphiql: true
 }))
 

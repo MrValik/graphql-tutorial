@@ -10,13 +10,11 @@ export const ADD_MOVIE = gql`
     $isWatched: Boolean
   ) {
     alert: addMovie(
-      movie: {
-        title: $title
-        rate: $rate
-        genre: $genre
-        directorId: $directorId
-        isWatched: $isWatched
-      }
+      title: $title
+      rate: $rate
+      genre: $genre
+      directorId: $directorId
+      isWatched: $isWatched
     ) {
       status
       message
@@ -35,13 +33,11 @@ export const UPDATE_MOVIE = gql`
   ) {
     updateMovie(
       movieId: $id
-      movie: {
-        title: $title
-        rate: $rate
-        genre: $genre
-        directorId: $directorId
-        isWatched: $isWatched
-      }
+      title: $title
+      rate: $rate
+      genre: $genre
+      directorId: $directorId
+      isWatched: $isWatched
     ) {
       status
       message
