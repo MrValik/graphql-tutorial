@@ -1,9 +1,10 @@
+import { FC } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import Movies from './pages/Movies'
 import Directors from './pages/Directors'
 
 
-export default function Routes() {
+const Routes:FC = () => {
   return (
     <Switch>
       <Route exact path="/">
@@ -16,3 +17,6 @@ export default function Routes() {
     </Switch>
   )
 }
+
+
+export default Routes

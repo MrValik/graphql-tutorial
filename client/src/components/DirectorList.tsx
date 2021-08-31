@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { Table } from 'react-bootstrap'
+import { IDirectorList } from '../interfaces/director'
 import DirectorItem from './DirectorItem'
 
 
-export default function DirectorList({ directors }) {
+const DirectorList:FC<IDirectorList> = ({ directors }) => {
   return (
     directors?.length ? (
       <Table className="shadow">
@@ -29,3 +30,6 @@ export default function DirectorList({ directors }) {
     ) : <h5 className="text-danger noData">No Data</h5>
   )
 }
+  
+
+export default DirectorList

@@ -1,21 +1,27 @@
 import { useMutation } from '@apollo/client'
-import React, { useContext } from 'react'
+import React, { useContext, FC } from 'react'
 import { Modal } from 'react-bootstrap'
 import { ActionContext } from '../contexts/ActionContext'
 import { DELETE_MOVIE_BY_ID } from '../mutations/movie'
 import { GET_ALL_MOVIES } from '../queries/movie'
 import { GET_ALL_DIRECTORS } from '../queries/director'
+import { IAlert, TID } from '../interfaces'
 
 
-export default function DeleteMovie() {
+const DeleteMovie:FC = () => {
   const { movieId, showDeleteMovieModal, openDeleteMovieModal, closeDeleteMovieModal } = useContext(ActionContext)
-  const [deleteMovie] = useMutation(DELETE_MOVIE_BY_ID, {
+  const [deleteMovie] = useMutation
+  <
+    { deleteMovie: IAlert },
+    { id: TID }
+  >
+  (DELETE_MOVIE_BY_ID, {
     refetchQueries: [ GET_ALL_MOVIES, GET_ALL_DIRECTORS ],
     variables: { id: movieId }
   })
 
 
-  const handleDeleteMovie = () => {
+  const handleDeleteMovie = ():void => {
     deleteMovie()
     closeDeleteMovieModal()
   }
@@ -24,7 +30,7 @@ export default function DeleteMovie() {
   return (
     <Modal 
       show={showDeleteMovieModal} 
-      onHide={() => openDeleteMovieModal(movieId)} 
+      onHide={():void => openDeleteMovieModal(movieId)} 
       id="deleteMovieModal"
     >
       <Modal.Body>
@@ -51,3 +57,6 @@ export default function DeleteMovie() {
     </Modal>
   )
 }
+
+
+export default DeleteMovie

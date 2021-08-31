@@ -1,11 +1,12 @@
+import { FC } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
-import Routes from './Routes'
-import Navbar from './components/Navbar'
 import { useAction } from './hooks/useAction'
 import { ActionContext } from './contexts/ActionContext'
+import Routes from './Routes'
+import Navbar from './components/Navbar'
 
 
-function App() {
+const App:FC = () => {
   const { 
     movieId, showAddOrEditMovieModal, showDeleteMovieModal, movieForm,
     openAddOrEditMovieModal, openDeleteMovieModal, closeAddOrEditMovieModal, closeDeleteMovieModal,

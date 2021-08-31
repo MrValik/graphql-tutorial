@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { Navbar, Nav, Container } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
 
 
-export default function NavBar() {
+const NavBar:FC = () => {
   return (
     <Navbar 
       collapseOnSelect 
@@ -20,3 +20,6 @@ export default function NavBar() {
     </Navbar>
   )
 }
+
+
+export default NavBar

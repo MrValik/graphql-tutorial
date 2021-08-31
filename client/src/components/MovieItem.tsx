@@ -1,16 +1,23 @@
-import React, { useContext } from 'react'
+import React, { useContext, FC } from 'react'
 import { Form, Dropdown } from 'react-bootstrap'
 import { ActionContext } from '../contexts/ActionContext'
+import { TID } from '../interfaces'
+import { IMovie } from '../interfaces/movie'
 
-const numberFormat = num => {
+
+interface IProps {
+  movie: IMovie
+}
+
+const numberFormat = (num:number):string => {
   return Intl.NumberFormat('en', {
     minimumFractionDigits: 1
   }).format(num)
 }
 
 
-export default function MovieItem({ movie }) {
-  const { title, rate, genre, director, isWatched } = movie
+const MovieItem:FC<IProps> = ({ movie }) => {
+  const { id, title, rate, genre, director, isWatched } = movie
   const { openAddOrEditMovieModal, openDeleteMovieModal } = useContext(ActionContext)
 
 
@@ -35,7 +42,7 @@ export default function MovieItem({ movie }) {
           <Dropdown.Menu>
             <Dropdown.Item 
               id="edit" 
-              onClick={() => openAddOrEditMovieModal({ 
+              onClick={():void => openAddOrEditMovieModal({ 
                 ...movie, 
                 directorId: director.id,
                 rate: numberFormat(movie.rate)
@@ -46,7 +53,7 @@ export default function MovieItem({ movie }) {
 
             <Dropdown.Item 
               id="delete" 
-              onClick={() => openDeleteMovieModal(movie.id)}
+              onClick={():void => openDeleteMovieModal(id as TID)}
             >
               Delete
             </Dropdown.Item>
@@ -56,3 +63,6 @@ export default function MovieItem({ movie }) {
     </tr>
   )
 }
+
+
+export default MovieItem

@@ -1,7 +1,10 @@
 import { useMutation, useQuery } from '@apollo/client'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { FC, ChangeEvent, FormEvent, useContext, useEffect, useState } from 'react'
 import { Button, Form, Modal, ButtonGroup } from 'react-bootstrap'
 import { ActionContext } from '../contexts/ActionContext'
+import { IAlert } from '../interfaces'
+import { IDirectorList } from '../interfaces/director'
+import { IMovieForm } from '../interfaces/movie'
 import { ADD_MOVIE, UPDATE_MOVIE } from '../mutations/movie'
 import { GET_ALL_DIRECTORS } from '../queries/director'
 import { GET_ALL_MOVIES } from '../queries/movie'
@@ -14,26 +17,36 @@ const genres = [
 ]
 
 
-export default function AddMovie() {
+const AddMovie:FC = () => {
   const { openAddOrEditMovieModal, closeAddOrEditMovieModal, movieForm, showAddOrEditMovieModal } = useContext(ActionContext)
-  const { data: directorData } = useQuery(GET_ALL_DIRECTORS)
-  const [form, setForm] = useState(movieForm)
+  const { data: directorData } = useQuery<IDirectorList>(GET_ALL_DIRECTORS)
+  const [form, setForm] = useState<IMovieForm>(movieForm)
 
-  const [addMovie, { loading }] = useMutation(ADD_MOVIE, {
+  const [addMovie, { loading }] = useMutation
+  <
+    { addMovie: IAlert },
+    IMovieForm
+  >
+  (ADD_MOVIE, {
     refetchQueries: [ GET_ALL_MOVIES, GET_ALL_DIRECTORS ]
   })
 
-  const [updateMovie] = useMutation(UPDATE_MOVIE, {
+  const [updateMovie] = useMutation
+  <
+    { updateMovie: IAlert },
+    IMovieForm
+  >
+  (UPDATE_MOVIE, {
     refetchQueries: [ GET_ALL_MOVIES, GET_ALL_DIRECTORS ]
   })
 
   
-  useEffect(() => {
+  useEffect(():void => {
     setForm(movieForm)
   }, [movieForm])
 
 
-  const handleChange = e => {
+  const handleChange = (e:ChangeEvent<HTMLInputElement>):void => {
     const { name, value } = e.target
     setForm({
       ...form,
@@ -42,7 +55,7 @@ export default function AddMovie() {
   }
 
 
-  const handleSelectGenre = e => {
+  const handleSelectGenre = (e:ChangeEvent<HTMLSelectElement>):void => {
     let selectedGenres = []
 
     selectedGenres = form?.genre.includes(e.target.value) 
@@ -56,12 +69,12 @@ export default function AddMovie() {
   }
 
 
-  const handleChangeRate = e => setForm({ ...form, rate: (e.target.value / 10).toFixed(1) })
+  const handleChangeRate = (e:ChangeEvent<HTMLInputElement | any>):void => setForm({ ...form, rate: (e.target.value / 10).toFixed(1) })
 
-  const handleCheck = e => setForm({ ...form, isWatched: e.target.checked })
+  const handleCheck = (e:ChangeEvent<HTMLInputElement>):void => setForm({ ...form, isWatched: e.target.checked })
 
 
-  const handleSubmit = e => {
+  const handleSubmit = (e:FormEvent<HTMLFormElement>):void => {
     e.preventDefault()
 
     const data = {
@@ -74,7 +87,7 @@ export default function AddMovie() {
   }
 
 
-  const handleUpdate = e => {
+  const handleUpdate = (e:FormEvent<HTMLFormElement>):void => {
     e.preventDefault()
 
     const data = {
@@ -91,7 +104,7 @@ export default function AddMovie() {
   return (
     <Modal 
       show={showAddOrEditMovieModal} 
-      onHide={() => openAddOrEditMovieModal(movieForm)}
+      onHide={():void => openAddOrEditMovieModal(movieForm)}
     >
       <Modal.Body>
         <Form 
@@ -194,3 +207,6 @@ export default function AddMovie() {
     </Modal>
   )
 }
+
+
+export default AddMovie

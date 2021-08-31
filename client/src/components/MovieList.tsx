@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { Table } from 'react-bootstrap'
+import { IMovieList } from '../interfaces/movie'
 import MovieItem from './MovieItem'
 
 
-export default function MovieList({ movies }) {
+const MovieList:FC<IMovieList> = ({ movies }) => {
   return (
     movies?.length ? (
       <Table className="shadow">
@@ -31,3 +32,6 @@ export default function MovieList({ movies }) {
     ) : <h5 className="text-danger noData">No Data</h5>
   )
 }
+
+
+export default MovieList

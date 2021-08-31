@@ -1,20 +1,27 @@
 import { useMutation } from '@apollo/client'
-import React, { useContext } from 'react'
+import React, { useContext, FC } from 'react'
 import { Modal } from 'react-bootstrap'
 import { ActionContext } from '../contexts/ActionContext'
 import { DELETE_DIRECTOR_BY_ID } from '../mutations/director'
 import { GET_ALL_DIRECTORS } from '../queries/director'
+import { IAlert, TID } from '../interfaces'
 
 
-export default function DeleteDirector() {
+
+const DeleteDirector:FC = () => {
   const { directorId, showDeleteDirectorModal, openDeleteDirectorModal, closeDeleteDirectorModal } = useContext(ActionContext)
-  const [deleteDirector] = useMutation(DELETE_DIRECTOR_BY_ID, {
+  const [deleteDirector] = useMutation
+  <
+    { deleteDirector: IAlert },
+    { id: TID }
+  >
+  (DELETE_DIRECTOR_BY_ID, {
     variables: { id: directorId },
     refetchQueries: [ GET_ALL_DIRECTORS ]
   })
 
 
-  const handleDeleteDirector = () => {
+  const handleDeleteDirector = ():void => {
     deleteDirector()
     closeDeleteDirectorModal()
   }
@@ -23,7 +30,7 @@ export default function DeleteDirector() {
   return (
     <Modal 
       show={showDeleteDirectorModal} 
-      onHide={() => openDeleteDirectorModal(directorId)} 
+      onHide={():void => openDeleteDirectorModal(directorId)} 
       id="deleteDirectorModal"
     >
       <Modal.Body>
@@ -51,3 +58,5 @@ export default function DeleteDirector() {
     </Modal>
   )
 }
+
+export default DeleteDirector

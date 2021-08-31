@@ -1,13 +1,22 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
-const { graphqlHTTP } = require('express-graphql')
+const fs = require('fs')
+const path = require('path')
 const dotenv = require('dotenv')
+
+
+// GraphQL
+const { graphqlHTTP } = require('express-graphql')
+const { buildSchema } = require('graphql')
+
 
 dotenv.config()
 
 const app = express()
 
+
+// Middlewares
 app.use(cors({
   path: 'http://localhost:3000'
 }))
@@ -17,10 +26,12 @@ app.use(express.urlencoded({ extended: false }))
 
 
 // schema
-const schema = require('./graphql/schema')
+const schemaFile = fs.readFileSync(path.join(__dirname, 'graphql/schema.gql'), { encoding: 'utf-8' })
+const schema = buildSchema(schemaFile)
 
 // root
 const root = require('./graphql/root')
+
 
 // connect graphql
 app.use('/graphql', graphqlHTTP({

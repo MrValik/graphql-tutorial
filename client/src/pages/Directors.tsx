@@ -1,21 +1,22 @@
-import React, { useContext } from 'react'
+import React, { useContext, FC } from 'react'
 import { useQuery } from '@apollo/client'
 import { ActionContext } from '../contexts/ActionContext'
 import { GET_ALL_DIRECTORS } from '../queries/director'
+import { IDirectorList, IDirectorForm, IDirector } from '../interfaces/director'
 import DirectorList from '../components/DirectorList'
 import DirectorForm from '../components/DirectorForm'
 import DeleteDirector from '../components/DeleteDirector'
 import AddButton from '../components/AddButton'
 
 
-const initialState = {
+const initialState:IDirectorForm = {
   name: '',
   age: 0
 }
 
 
-export default function Directors() {
-  const { loading, data } = useQuery(GET_ALL_DIRECTORS)
+const Directors:FC = () => {
+  const { loading, data } = useQuery<IDirectorList>(GET_ALL_DIRECTORS)
   const { openAddOrEditDirectorModal } = useContext(ActionContext)
 
 
@@ -23,9 +24,10 @@ export default function Directors() {
     <div className="container" id="directorsPage">
       {loading ? <h5>LOADING...</h5> : (
         <>
-          <DirectorList directors={data?.directors} />
+          <DirectorList directors={data?.directors as IDirector[]} />
           <AddButton 
-            handleOpenModal={() => openAddOrEditDirectorModal(initialState)} 
+            handleOpenModal={():void => openAddOrEditDirectorModal(initialState)} 
+            isHide={false}
           />
         </>
       )}
@@ -37,3 +39,6 @@ export default function Directors() {
     </div>
   )
 }
+
+
+export default Directors

@@ -1,7 +1,13 @@
-import React from 'react'
+import React, { FC } from 'react'
 
 
-export default function AddButton({ handleOpenModal, isHide }) {
+interface IProps {
+  handleOpenModal:(() => void) | undefined,
+  isHide: boolean
+}
+
+
+const AddButton:FC<IProps> = ({ handleOpenModal, isHide }) => {
   return (
     <button 
       className="btn shadow" 
@@ -13,3 +19,5 @@ export default function AddButton({ handleOpenModal, isHide }) {
     </button>
   )
 }
+
+export default AddButton

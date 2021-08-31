@@ -1,9 +1,16 @@
-import React, { useContext } from 'react'
+import React, { useContext, FC } from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { ActionContext } from '../contexts/ActionContext'
+import { TID } from '../interfaces'
+import { IDirector } from '../interfaces/director'
 
 
-export default function DirectorItem({ director }) {
+interface IProps {
+  director: IDirector
+}
+
+
+const DirectorItem:FC<IProps> = ({ director }) => {
   const { id, name, age, movies } = director
   const { openAddOrEditDirectorModal, openDeleteDirectorModal } = useContext(ActionContext)
 
@@ -22,14 +29,14 @@ export default function DirectorItem({ director }) {
           <Dropdown.Menu>
             <Dropdown.Item 
               id="edit" 
-              onClick={() => openAddOrEditDirectorModal(director)}
+              onClick={():void => openAddOrEditDirectorModal(director)}
             >
               Edit
             </Dropdown.Item>
 
             <Dropdown.Item 
               id="delete"
-              onClick={() => openDeleteDirectorModal(id)} 
+              onClick={():void => openDeleteDirectorModal(id as TID)} 
             >
               Delete
             </Dropdown.Item>
@@ -39,3 +46,6 @@ export default function DirectorItem({ director }) {
     </tr>
   )
 }
+
+
+export default DirectorItem

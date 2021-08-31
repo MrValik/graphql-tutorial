@@ -1,17 +1,20 @@
 import { useCallback, useState } from 'react'
+import { TID } from '../interfaces'
+import { IMovieForm } from '../interfaces/movie'
+import { IDirectorForm } from '../interfaces/director'
 
 
 export function useAction() {
   // Movie
   const [showAddOrEditMovieModal, setShowAddOrEditMovieModal] = useState(false)
   const [showDeleteMovieModal, setShowDeleteMovieModal] = useState(false)
-  const [movieForm, setMovieForm] = useState({})
-  const [movieId, setMovieId] = useState('')
+  const [movieForm, setMovieForm] = useState<IMovieForm>({} as IMovieForm)
+  const [movieId, setMovieId] = useState<TID>('')
 
   // Director
   const [showAddOrEditDirectorModal, setShowAddOrEditDirectorModal] = useState(false)
   const [showDeleteDirectorModal, setShowDeleteDirectorModal] = useState(false)
-  const [directorForm, setDirectorForm] = useState({})
+  const [directorForm, setDirectorForm] = useState<IDirectorForm>({} as IDirectorForm)
   const [directorId, setDirectorId] = useState('')
 
 
@@ -24,7 +27,7 @@ export function useAction() {
 
   const closeAddOrEditMovieModal = useCallback(() => {
     setShowAddOrEditMovieModal(false)
-    setMovieForm({})
+    setMovieForm({} as IMovieForm)
   }, [])
 
 
@@ -49,7 +52,7 @@ export function useAction() {
 
   const closeAddOrEditDirectorModal = useCallback(() => {
     setShowAddOrEditDirectorModal(false)
-    setDirectorForm({})
+    setDirectorForm({} as IDirectorForm)
   }, [])
 
 

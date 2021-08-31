@@ -1,30 +1,42 @@
 import { useMutation } from '@apollo/client'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, FC, ChangeEvent, FormEvent } from 'react'
 import { Button, Form, Modal, ButtonGroup } from 'react-bootstrap'
 import { ActionContext } from '../contexts/ActionContext'
+import { IAlert } from '../interfaces'
+import { IDirectorForm } from '../interfaces/director'
 import { ADD_DIRECTOR, UPDATE_DIRECTOR } from '../mutations/director'
 import { GET_ALL_DIRECTORS } from '../queries/director'
 
 
-export default function AddDirector() {
+const AddDirector:FC = () => {
   const { openAddOrEditDirectorModal, closeAddOrEditDirectorModal, directorForm, showAddOrEditDirectorModal } = useContext(ActionContext)
-  const [form, setForm] = useState(directorForm)
+  const [form, setForm] = useState<IDirectorForm>({} as IDirectorForm)
 
-  const [addDirector, { loading }] = useMutation(ADD_DIRECTOR, {
+  const [addDirector, { loading }] = useMutation
+  <
+    { addDirector: IAlert },
+    IDirectorForm
+  >
+  (ADD_DIRECTOR, {
     refetchQueries: [ GET_ALL_DIRECTORS ]
   })
 
-  const [updateDirector] = useMutation(UPDATE_DIRECTOR, {
+  const [updateDirector] = useMutation
+  <
+    { updateDirector: IAlert },
+    IDirectorForm
+  >
+  (UPDATE_DIRECTOR, {
     refetchQueries: [ GET_ALL_DIRECTORS ]
   })
 
   
-  useEffect(() => {
+  useEffect(():void => {
     setForm(directorForm)
   }, [directorForm])
 
 
-  const handleChange = e => {
+  const handleChange = (e:ChangeEvent<HTMLInputElement>):void => {
     const { name, value } = e.target
     setForm({
       ...form,
@@ -33,20 +45,15 @@ export default function AddDirector() {
   }
 
 
-  const handleSubmit = e => {
+  const handleSubmit = (e:FormEvent<HTMLFormElement>):void => {
     e.preventDefault()
 
-    const data = {
-      ...form,
-      age: +form.age
-    }
-
-    addDirector({ variables: { ...data }})
+    addDirector({ variables: { ...form, age: +form.age }})
     closeAddOrEditDirectorModal()
   }
 
 
-  const handleUpdate = e => {
+  const handleUpdate = (e:FormEvent<HTMLFormElement>):void => {
     e.preventDefault()
 
     const data = {
@@ -64,7 +71,7 @@ export default function AddDirector() {
   return (
     <Modal 
       show={showAddOrEditDirectorModal} 
-      onHide={() => openAddOrEditDirectorModal(directorForm)}
+      onHide={():void => openAddOrEditDirectorModal(directorForm)}
     >
       <Modal.Body>
         <Form 
@@ -119,3 +126,6 @@ export default function AddDirector() {
     </Modal>
   )
 }
+
+
+export default AddDirector
